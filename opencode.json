@@ -5,6 +5,13 @@
       "type": "remote",
       "url": "http://localhost:6006/mcp",
       "enabled": true
+    },
+    "panda": {
+      "command": "npx",
+      "args": [
+        "panda",
+        "mcp"
+      ]
     }
   }
 }
