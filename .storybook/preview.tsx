@@ -1,3 +1,4 @@
+import { withThemeByClassName } from '@storybook/addon-themes'
 import { css } from '../styled-system/css'
 import type { Preview } from '@storybook/react-vite'
 import '../src/index.css';
@@ -20,6 +21,13 @@ const preview: Preview = {
   },
 
   decorators: [
+    withThemeByClassName({
+      themes: {
+        light: '',
+        dark: 'dark',
+      },
+      defaultTheme: 'light',
+    }),
     (Story) => (
       <div className={css({ bg: 'gray.1' })}>
         <Story />
