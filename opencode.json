@@ -7,8 +7,10 @@
       "enabled": true
     },
     "panda": {
-      "command": "npx",
-      "args": [
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "npx",
         "panda",
         "mcp"
       ]
