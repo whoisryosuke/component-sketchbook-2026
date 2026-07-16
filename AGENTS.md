@@ -12,6 +12,10 @@ React + TypeScript + Vite component sketchbook. Components live in `src/` and ar
 
 There is no `test` script. Tests run through Storybook + Vitest (see below).
 
+## Compiler
+
+- When importing types in TypeScript files, preface them with `type`, for example: `import { type Post } from 'library'`.
+
 ## Testing
 
 - Component tests are Storybook stories (`*.stories.ts/tsx`) run via the `@storybook/addon-vitest` plugin.
