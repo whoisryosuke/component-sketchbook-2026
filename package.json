@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@whoisryosuke/oat-milk-styled-system": "link:../../../Library/pnpm/global/5/node_modules/@whoisryosuke/oat-milk-styled-system",
+    "motion": "^12.42.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },
@@ -25,6 +26,7 @@
     "@storybook/addon-a11y": "^10.5.2",
     "@storybook/addon-docs": "^10.5.2",
     "@storybook/addon-mcp": "^0.7.0",
+    "@storybook/addon-themes": "^10.5.2",
     "@storybook/addon-vitest": "^10.5.2",
     "@storybook/react-vite": "^10.5.2",
     "@types/babel__core": "^7.20.5",
