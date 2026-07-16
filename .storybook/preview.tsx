@@ -31,7 +31,7 @@ const preview: Preview = {
       defaultTheme: 'light',
     }),
     (Story) => (
-      <div className={css({ bg: 'gray.1' })}>
+      <div className={css({ bg: 'gray.1', p: 4, position: "absolute", inset: 0, })}>
         <Story />
       </div>
     ),
