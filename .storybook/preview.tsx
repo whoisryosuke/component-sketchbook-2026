@@ -1,3 +1,4 @@
+import { css } from '../styled-system/css'
 import type { Preview } from '@storybook/react-vite'
 import '../src/index.css';
 
@@ -17,6 +18,14 @@ const preview: Preview = {
       test: 'todo'
     }
   },
+
+  decorators: [
+    (Story) => (
+      <div className={css({ bg: 'gray.1' })}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default preview;
