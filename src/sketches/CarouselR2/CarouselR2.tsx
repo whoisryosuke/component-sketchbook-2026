@@ -21,10 +21,6 @@ const buttonStyle = cva({
     }
 })
 
-const VISIBLE_RANGE = 2;
-const SLIDE_WIDTH = 300;
-const SLIDES = new Array(5).fill(0);
-
 const styles = sva({
     slots: ['container', 'slide'],
     base: {
@@ -37,7 +33,6 @@ const styles = sva({
         },
         slide: {
             boxSizing: "border-box",
-            width: SLIDE_WIDTH,
             height: '150px',
             position: "absolute",
             top: 0,
@@ -62,9 +57,12 @@ const styles = sva({
 type Props = {
     rotation: number;
     z: number;
+    visibleRange: number;
+    slideWidth: number;
+    slideCount: number;
 }
 
-const CarouselR2 = ({ rotation = 38, z = 220 }: Props) => {
+const CarouselR2 = ({ rotation = 38, z = 220, visibleRange = 2, slideWidth = 300, slideCount = 5 }: Props) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const [containerWidth, setContainerWidth] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -79,20 +77,19 @@ const CarouselR2 = ({ rotation = 38, z = 220 }: Props) => {
 
 
     const getAnimationForIndex = (index: number, current: number, containerWidth: number) => {
-        const length = SLIDES.length;
-        // Get offset (-2, -1, 0, 1, 2  → 5 items)
+        const length = slideCount;
         let diff = (index - current + length) % length;
         if (diff > length / 2) diff -= length;
         if (diff < -length / 2) diff += length;
 
         const abs = Math.abs(diff);
-        const inRange = abs <= VISIBLE_RANGE;
+        const inRange = abs <= visibleRange;
 
         const center = containerWidth / 2;
-        const itemCenter = SLIDE_WIDTH / 2;
+        const itemCenter = slideWidth / 2;
 
         return {
-            x: diff * SLIDE_WIDTH + center - itemCenter,
+            x: diff * slideWidth + center - itemCenter,
             z: -abs * z,
             rotateY: diff * rotation,
             scale: Math.max(1 - abs * 0.24, 0.4),
@@ -106,11 +103,11 @@ const CarouselR2 = ({ rotation = 38, z = 220 }: Props) => {
     }
 
 
-    const renderItems = SLIDES.map((_, index) => {
+    const renderItems = Array.from({ length: slideCount }).map((_, index) => {
         const anim = getAnimationForIndex(index, currentIndex, containerWidth);
-        console.log('anim', index, anim)
         return (
             <motion.div className={classes.slide} key={index}
+                style={{ width: slideWidth }}
                 animate={{
                     x: anim.x,
                     z: anim.z,
@@ -125,7 +122,7 @@ const CarouselR2 = ({ rotation = 38, z = 220 }: Props) => {
         setCurrentIndex((prev) => Math.max(prev - 1, 0))
     }
     const handleNext = () => {
-        setCurrentIndex((prev) => Math.min(prev + 1, SLIDES.length - 1))
+        setCurrentIndex((prev) => Math.min(prev + 1, slideCount - 1))
     }
 
     return (
