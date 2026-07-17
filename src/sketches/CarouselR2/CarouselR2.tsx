@@ -119,10 +119,10 @@ const CarouselR2 = ({ rotation = 38, z = 220, visibleRange = 2, slideWidth = 300
     })
 
     const handlePrev = () => {
-        setCurrentIndex((prev) => Math.max(prev - 1, 0))
+        setCurrentIndex((prev) => prev - 1 % slideCount)
     }
     const handleNext = () => {
-        setCurrentIndex((prev) => Math.min(prev + 1, slideCount - 1))
+        setCurrentIndex((prev) => prev + 1 % slideCount)
     }
 
     return (
