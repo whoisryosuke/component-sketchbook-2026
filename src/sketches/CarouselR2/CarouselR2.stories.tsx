@@ -16,16 +16,16 @@ const meta: Meta<typeof CarouselR2> = {
       control: { type: 'range', min: 0, max: 90, step: 1 },
     },
     z: {
-      control: { type: 'range', min: 0, max: 500, step: 10 },
+      control: { type: 'range', min: 0, max: 800, step: 10 },
     },
     visibleRange: {
-      control: { type: 'range', min: 0, max: 5, step: 1 },
+      control: { type: 'range', min: 0, max: 10, step: 1 },
     },
     slideWidth: {
       control: { type: 'range', min: 100, max: 600, step: 10 },
     },
     slideCount: {
-      control: { type: 'range', min: 3, max: 12, step: 1 },
+      control: { type: 'range', min: 3, max: 24, step: 1 },
     },
   },
 }

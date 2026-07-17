@@ -86,6 +86,7 @@ const CarouselR2 = ({ rotation = 38, z = 220, visibleRange = 2, slideWidth = 300
 
         const abs = Math.abs(diff);
         const inRange = abs <= visibleRange;
+        const opacity = 1 - (abs / visibleRange);
 
         const center = containerWidth / 2;
         const itemCenter = slideWidth / 2;
@@ -93,9 +94,9 @@ const CarouselR2 = ({ rotation = 38, z = 220, visibleRange = 2, slideWidth = 300
         return {
             x: diff * slideWidth + center - itemCenter,
             z: -abs * z,
-            rotateY: diff * rotation,
-            scale: Math.max(1 - abs * 0.24, 0.4),
-            opacity: inRange ? 1 - abs * 0.32 : 0,
+            rotateY: diff / visibleRange * rotation,
+            // scale: Math.max(1 - abs * 0.24, 0.1),
+            opacity,
             zIndex: 100 - abs,
             pointerEvents: (inRange && abs !== 0 ? "auto" : abs === 0 ? "auto" : "none") as
                 | "auto"
