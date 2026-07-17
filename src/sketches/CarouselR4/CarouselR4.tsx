@@ -95,6 +95,11 @@ type Props = {
     slideCount: number;
 }
 
+
+/**
+ * 3D vertical cylindrical carousel with indicators
+ * Slides rotate in a circle like a wheel spinning.
+ */
 const CarouselR3 = ({ rotation = 38, visibleRange = 2, slideHeight = 150, slideCount = 5 }: Props) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const [containerHeight, setContainerHeight] = useState(0);
