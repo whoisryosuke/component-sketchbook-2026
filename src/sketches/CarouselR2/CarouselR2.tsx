@@ -64,6 +64,9 @@ type Props = {
     slideCount: number;
 }
 
+/**
+ * 3D horizontal carousel/slider with selected item "focused" and other items falling back into space.
+ */
 const CarouselR2 = ({ rotation = 38, z = 220, visibleRange = 2, slideWidth = 300, slideCount = 5 }: Props) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const [containerWidth, setContainerWidth] = useState(0);

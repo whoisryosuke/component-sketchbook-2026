@@ -53,6 +53,11 @@ const styles = sva({
 
 type Props = {}
 
+/**
+ * Simple horizontal slider. Expects items with a fixed width.
+ * @param props 
+ * @returns 
+ */
 const CarouselR1 = (props: Props) => {
     const [currentIndex, setCurrentIndex] = useState(0)
 
