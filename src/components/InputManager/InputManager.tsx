@@ -1,4 +1,5 @@
 import { GamepadInput } from "./Gamepad";
+import InputViz from "./InputViz";
 import KeyboardInput from "./Keyboard";
 
 type Props = {
@@ -14,6 +15,7 @@ const InputManager = ({
         <>
             {!disableKeyboard && <KeyboardInput />}
             {!disableGamepad && <GamepadInput />}
+            <InputViz />
         </>
     );
 };
