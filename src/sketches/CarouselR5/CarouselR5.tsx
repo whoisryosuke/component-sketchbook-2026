@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { cva, sva } from '../../../styled-system/css'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Stack } from '../../../styled-system/jsx';
+import { useInputStore } from '../../store/input';
 
 const buttonStyle = cva({
     base: {
@@ -99,7 +100,7 @@ const CarouselR5 = ({ rotation = 38, visibleRange = 2, slideHeight = 150, slideC
     const containerRef = useRef<HTMLDivElement>(null)
     const [containerHeight, setContainerHeight] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(0)
-
+    const input = useInputStore((state) => state.input);
 
     const classes = styles({})
 
@@ -118,6 +119,7 @@ const CarouselR5 = ({ rotation = 38, visibleRange = 2, slideHeight = 150, slideC
             window.removeEventListener("resize", syncContainerSize)
         }
     }, [])
+
 
 
     const getAnimationForIndex = (index: number, current: number, containerHeight: number) => {
@@ -180,6 +182,13 @@ const CarouselR5 = ({ rotation = 38, visibleRange = 2, slideHeight = 150, slideC
     const renderIndicators = slides.map((_, index) => <motion.div key={index} data-selected={Math.abs(currentIndex) % slideCount == index} className={classes.indicator} animate={{
         height: Math.abs(currentIndex) % slideCount == index ? "2rem" : "0.5rem"
     }} />)
+
+    useEffect(() => {
+        if (input.up) handlePrev();
+        if (input.down) handleNext();
+
+    }, [input.up, input.down])
+
 
     return (
         <Stack flexDir="row" className={classes.root}>
