@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { useFocusStore } from "../../store/library";
-import { UserInputMap } from "../../constants/input";
+import { useInputStore } from "../../store/input";
+import { type UserInputMap } from "../../constants/input";
 
 interface GamepadRef {
     [key: number]: Gamepad;
@@ -14,7 +14,7 @@ export function useGamepads() {
         currentDevice,
         setCurrentDevice,
         setDeviceName,
-    } = useFocusStore();
+    } = useInputStore();
     const gamepads = useRef<GamepadRef>([]);
     const requestRef = useRef<number>();
 
