@@ -8,8 +8,8 @@ export default create({
     brandImage: logo,
     brandTarget: '_self',
     //
-    colorPrimary: '#0400ff',
-    colorSecondary: '#585C6D',
+    colorPrimary: '#00b9d5',
+    colorSecondary: '#2f7d89',
 
     // UI
     appBg: '#111111',
@@ -23,9 +23,9 @@ export default create({
     textInverseColor: '#111111',
 
     // Toolbar default and active colors
-    barTextColor: '#9E9E9E',
-    barSelectedColor: '#585C6D',
-    barHoverColor: '#585C6D',
+    barTextColor: '#718084',
+    barSelectedColor: '#70acb5',
+    barHoverColor: '#00bbe0',
     barBg: '#111111',
 
     // Form colors
@@ -33,4 +33,13 @@ export default create({
     inputBorder: '#3f3f3f',
     inputTextColor: '#9E9E9E',
     inputBorderRadius: 2,
+
+
+
+    appHoverBg: '#006979',
+    textMutedColor: '#a8a8a8',
+    buttonBg: '#00414b',
+    buttonBorder: '#006271',
+    booleanBg: '#00b9d5',
+    booleanSelectedBg: '#00b9d5',
 });
