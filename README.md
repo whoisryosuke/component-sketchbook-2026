@@ -1,3 +1,5 @@
+![Storybook preview](./docs/storybook.png)
+
 # Ryo's Component Sketchbook 2026
 
 A little sketchbook for experimenting with UI and interactivity.
