@@ -59,36 +59,12 @@ const styles = sva({
     }
 })
 
-const getAnimationForIndex = (index: number, current: number, containerWidth: number) => {
-    const length = SLIDES.length;
-    // Get offset (-2, -1, 0, 1, 2  → 5 items)
-    let diff = (index - current + length) % length;
-    if (diff > length / 2) diff -= length;
-    if (diff < -length / 2) diff += length;
-
-    const abs = Math.abs(diff);
-    const inRange = abs <= VISIBLE_RANGE;
-
-    const center = containerWidth / 2;
-    const itemCenter = SLIDE_WIDTH / 2;
-
-    return {
-        x: diff * SLIDE_WIDTH + center - itemCenter,
-        z: -abs * 220,
-        rotateY: diff * -38,
-        scale: Math.max(1 - abs * 0.24, 0.4),
-        opacity: inRange ? 1 - abs * 0.32 : 0,
-        zIndex: 100 - abs,
-        pointerEvents: (inRange && abs !== 0 ? "auto" : abs === 0 ? "auto" : "none") as
-            | "auto"
-            | "none",
-    };
-
+type Props = {
+    rotation: number;
+    z: number;
 }
 
-type Props = {}
-
-const CarouselR2 = (props: Props) => {
+const CarouselR2 = ({ rotation = 38, z = 220 }: Props) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const [containerWidth, setContainerWidth] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -100,6 +76,34 @@ const CarouselR2 = (props: Props) => {
         const size = containerRef.current.getBoundingClientRect();
         setContainerWidth(size.width);
     }, [])
+
+
+    const getAnimationForIndex = (index: number, current: number, containerWidth: number) => {
+        const length = SLIDES.length;
+        // Get offset (-2, -1, 0, 1, 2  → 5 items)
+        let diff = (index - current + length) % length;
+        if (diff > length / 2) diff -= length;
+        if (diff < -length / 2) diff += length;
+
+        const abs = Math.abs(diff);
+        const inRange = abs <= VISIBLE_RANGE;
+
+        const center = containerWidth / 2;
+        const itemCenter = SLIDE_WIDTH / 2;
+
+        return {
+            x: diff * SLIDE_WIDTH + center - itemCenter,
+            z: -abs * z,
+            rotateY: diff * rotation,
+            scale: Math.max(1 - abs * 0.24, 0.4),
+            opacity: inRange ? 1 - abs * 0.32 : 0,
+            zIndex: 100 - abs,
+            pointerEvents: (inRange && abs !== 0 ? "auto" : abs === 0 ? "auto" : "none") as
+                | "auto"
+                | "none",
+        };
+
+    }
 
 
     const renderItems = SLIDES.map((_, index) => {
