@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { FocusId, FocusItem } from "../types";
 import {
     type UserInputMap,
     type UserInputKeys,
