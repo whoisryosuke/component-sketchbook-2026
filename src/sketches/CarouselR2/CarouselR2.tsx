@@ -25,11 +25,13 @@ const styles = sva({
     slots: ['container', 'slide'],
     base: {
         container: {
+            maxWidth: "100%",
             minHeight: '150px',
             margin: 'auto',
             position: 'relative',
             display: 'flex',
             perspective: 1420,
+            overflow: 'hidden',
         },
         slide: {
             boxSizing: "border-box",
