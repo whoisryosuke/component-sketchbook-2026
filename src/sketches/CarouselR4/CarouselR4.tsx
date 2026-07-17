@@ -178,8 +178,8 @@ const CarouselR3 = ({ rotation = 38, visibleRange = 2, slideHeight = 150, slideC
         setCurrentIndex((prev) => prev + 1 % slideCount)
     }
 
-    const renderIndicators = slides.map((_, index) => <motion.div key={index} data-selected={currentIndex % slideCount == index} className={classes.indicator} animate={{
-        height: currentIndex % slideCount == index ? "2rem" : "0.5rem"
+    const renderIndicators = slides.map((_, index) => <motion.div key={index} data-selected={Math.abs(currentIndex) % slideCount == index} className={classes.indicator} animate={{
+        height: Math.abs(currentIndex) % slideCount == index ? "2rem" : "0.5rem"
     }} />)
 
     return (
