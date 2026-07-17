@@ -1,5 +1,5 @@
 import { create } from 'storybook/theming';
-import logo from "../public/logo-kanji-extruded.png"
+import logo from "../public/logotype-white.svg"
 
 export default create({
     base: 'dark',
