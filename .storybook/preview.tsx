@@ -1,6 +1,7 @@
 import { withThemeByClassName } from '@storybook/addon-themes'
 import { css } from '../styled-system/css'
 import type { Preview } from '@storybook/react-vite'
+import InputManager from "../src/components/InputManager/InputManager"
 import '../src/index.css';
 
 const preview: Preview = {
@@ -33,6 +34,7 @@ const preview: Preview = {
     (Story) => (
       <div className={css({ bg: 'gray.1', p: 4, position: "absolute", inset: 0, })}>
         <Story />
+        <InputManager />
       </div>
     ),
   ],
