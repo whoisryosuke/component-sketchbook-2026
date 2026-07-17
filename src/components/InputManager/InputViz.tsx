@@ -53,7 +53,7 @@ const InputViz = (props: Props) => {
     const input = useInputStore((state) => state.input);
 
     const keys = Object.entries(input).filter(([_, pressed]) => pressed);
-    const render = keys.map(([key]) => <InputKey inputKey={key} />)
+    const render = keys.map(([key]) => <InputKey key={key} inputKey={key as UserInputKeys} />)
 
     const isVisible = keys.length > 0
 
