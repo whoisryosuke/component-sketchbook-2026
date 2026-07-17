@@ -9,6 +9,8 @@ const meta: Meta<typeof CarouselR5> = {
         visibleRange: 5,
         slideHeight: 300,
         slideCount: 12,
+        autoplayDelay: 1000,
+        autoplaySpeed: 1000,
     },
     argTypes: {
         rotation: {
@@ -22,6 +24,12 @@ const meta: Meta<typeof CarouselR5> = {
         },
         slideCount: {
             control: { type: 'range', min: 3, max: 24, step: 1 },
+        },
+        autoplayDelay: {
+            control: { type: 'range', min: 0, max: 2000, step: 100 },
+        },
+        autoplaySpeed: {
+            control: { type: 'range', min: 0, max: 2000, step: 100 },
         },
     },
 }

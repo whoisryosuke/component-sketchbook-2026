@@ -94,13 +94,36 @@ type Props = {
     visibleRange: number;
     slideHeight: number;
     slideCount: number;
+    /**
+     * Time between each slide change in autoplay mode. Speed in ms.
+     */
+    autoplaySpeed: number;
+    /**
+     * Time until carousel starts autoplaying. Speed in ms.
+     */
+    autoplayDelay: number;
 }
 
-const CarouselR5 = ({ rotation = 38, visibleRange = 2, slideHeight = 150, slideCount = 5 }: Props) => {
+
+/**
+ * 3D vertical cylindrical carousel.
+ * Slides rotate in a circle like a wheel spinning.
+ * 
+ * Features:
+ * - Indicators
+ * - Keyboard/gamepad input
+ * - Autoplay
+ */
+const CarouselR5 = ({ rotation = 38, visibleRange = 2, slideHeight = 150, slideCount = 5, autoplayDelay = 1000, autoplaySpeed = 1000 }: Props) => {
+    const [playing, setPlaying] = useState(true)
     const containerRef = useRef<HTMLDivElement>(null)
     const [containerHeight, setContainerHeight] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(0)
     const input = useInputStore((state) => state.input);
+    // Autoplay animation
+    const animationRef = useRef<ReturnType<typeof setInterval>>(null)
+    // Used to re-enable autoplay after each input press
+    const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null)
 
     const classes = styles({})
 
@@ -119,6 +142,18 @@ const CarouselR5 = ({ rotation = 38, visibleRange = 2, slideHeight = 150, slideC
             window.removeEventListener("resize", syncContainerSize)
         }
     }, [])
+
+    const animate = () => {
+        console.log('animating carousel...')
+        setCurrentIndex(prev => prev + 1);
+    }
+    useEffect(() => {
+        if (playing) animationRef.current = setInterval(animate, autoplaySpeed);
+
+        return () => {
+            if (animationRef.current) clearInterval(animationRef.current);
+        }
+    }, [playing, autoplaySpeed])
 
 
 
@@ -172,11 +207,36 @@ const CarouselR5 = ({ rotation = 38, visibleRange = 2, slideHeight = 150, slideC
         )
     })
 
+    /**
+     * Clear timeout if not playing, or component dismounts.
+     */
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        }
+    }, [])
+
+    const startPlaying = () => {
+        console.log('restarting autoplay...')
+        setPlaying(true);
+    }
+    const queueAutoplay = () => {
+        console.log('queuing autoplay...')
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(startPlaying, autoplayDelay);
+    }
+
     const handlePrev = () => {
+        setPlaying(false);
         setCurrentIndex((prev) => prev - 1 % slideCount)
+
+        queueAutoplay();
     }
     const handleNext = () => {
+        setPlaying(false);
         setCurrentIndex((prev) => prev + 1 % slideCount)
+
+        queueAutoplay();
     }
 
     const renderIndicators = slides.map((_, index) => <motion.div key={index} data-selected={Math.abs(currentIndex) % slideCount == index} className={classes.indicator} animate={{
@@ -186,7 +246,6 @@ const CarouselR5 = ({ rotation = 38, visibleRange = 2, slideHeight = 150, slideC
     useEffect(() => {
         if (input.up) handlePrev();
         if (input.down) handleNext();
-
     }, [input.up, input.down])
 
 
