@@ -42,9 +42,14 @@ const styles = sva({
             position: "absolute",
             top: 0,
             left: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
 
             fontSize: 6,
-            color: "gray.12",
+            color: "gray.2",
+            bg: "gray.10",
+            borderRadius: 4,
             flexShrink: 0,
             flexGrow: 0,
             transformStyle: "preserve-3d",
@@ -65,9 +70,10 @@ const getAnimationForIndex = (index: number, current: number, containerWidth: nu
     const inRange = abs <= VISIBLE_RANGE;
 
     const center = containerWidth / 2;
+    const itemCenter = SLIDE_WIDTH / 2;
 
     return {
-        x: diff * SLIDE_WIDTH + center,
+        x: diff * SLIDE_WIDTH + center - itemCenter,
         z: -abs * 220,
         rotateY: diff * -38,
         scale: Math.max(1 - abs * 0.24, 0.4),
