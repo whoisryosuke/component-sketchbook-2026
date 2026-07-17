@@ -1,12 +1,39 @@
 <style>
-    body,
-    iframe {
-        scrollbar-color: #111 #5f5f5f;
-        scrollbar-width: thin;
+    input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 6px;
+        border-radius: 3px;
+        background: #ccc;
+        /* fallback until JS paints it */
     }
 
-    input[type="range"] {
-        accent-color: #002fff;
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #00cde0;
+        cursor: pointer;
+        margin-top: -4px;
+    }
 
+    /* Firefox: native two-tone support, no JS needed */
+    input[type="range"]::-moz-range-track {
+        background: #ccc;
+        height: 6px;
+        border-radius: 3px;
+    }
+
+    input[type="range"]::-moz-range-progress {
+        background: #00cde0;
+        height: 6px;
+        border-radius: 3px;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        background: #00cde0;
+        border: none;
     }
 </style>
