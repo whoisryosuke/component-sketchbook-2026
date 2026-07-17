@@ -102,12 +102,16 @@ const CarouselR3 = ({ rotation = 38, visibleRange = 2, slideHeight = 150, slideC
 
         const maxAngleRad = (rotation * Math.PI) / 180;
         const angle = (diff / visibleRange) * maxAngleRad;
-        const radiusScale = (0.75 * slideHeight * visibleRange) / Math.max(maxAngleRad, 0.01);
+        // We get the radius of the cylinder shape
+        const cylinderRadius = (0.75 * slideHeight * visibleRange) / Math.max(maxAngleRad, 0.01);
 
         return {
-            y: radiusScale * Math.sin(angle) + center - itemCenter,
-            z: -radiusScale * (1 - Math.cos(angle)),
+            // Calculate circle position based on radius + angle
+            y: cylinderRadius * Math.sin(angle) + center - itemCenter,
+            z: -cylinderRadius * (1 - Math.cos(angle)),
+            // Convert angle to radians
             rotateX: -(angle * 180) / Math.PI,
+            // Emphasize depth with scale alongside z-depth
             scale: 0.5 + 0.5 * Math.cos(angle),
             opacity,
             zIndex: 100 - abs,
