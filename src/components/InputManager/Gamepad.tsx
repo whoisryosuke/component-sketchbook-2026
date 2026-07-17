@@ -41,10 +41,11 @@ export function useGamepads() {
 
         // Input state to save to store later
         const newInput: Partial<UserInputMap> = {};
+        const latestInput = useInputStore.getState().input;
 
         gamepadMapArray.forEach((gamepadKey) => {
             const inputKey = gamepadMap[gamepadKey];
-            const previousInput = input[inputKey];
+            const previousInput = latestInput[inputKey];
             const currentInput = gamepad.buttons[parseInt(gamepadKey)].pressed;
             if (currentInput && !isPressed) isPressed = true;
             if (previousInput !== currentInput) {
@@ -87,6 +88,7 @@ export function useGamepads() {
             //   ? navigator.webkitGetGamepads()
             [];
 
+
         // Loop through all detected controllers and add if not already in state
         for (let i = 0; i < detectedGamepads.length; i++) {
             const newGamepads = detectedGamepads[i];
@@ -100,22 +102,23 @@ export function useGamepads() {
 
         window.addEventListener("gamepadconnected", connectGamepadHandler);
 
-        return window.removeEventListener(
+        return () => window.removeEventListener(
             "gamepadconnected",
             connectGamepadHandler
         );
-    });
+    }, []);
 
     // Update each gamepad's status on each "tick"
     const syncGamepads = () => {
-        if (!haveEvents) scanGamepads();
+        scanGamepads();
         requestRef.current = requestAnimationFrame(syncGamepads);
     };
 
     useEffect(() => {
+        console.log('syncing gamepads...')
         requestRef.current = requestAnimationFrame(syncGamepads);
         return () => cancelAnimationFrame(requestRef.current!);
-    });
+    }, []);
 
     //   return gamepads.current;
 }
