@@ -6,7 +6,6 @@ const meta: Meta<typeof CarouselR3> = {
     component: CarouselR3,
     args: {
         rotation: 180,
-        z: 220,
         visibleRange: 2,
         slideHeight: 300,
         slideCount: 5,
@@ -14,9 +13,6 @@ const meta: Meta<typeof CarouselR3> = {
     argTypes: {
         rotation: {
             control: { type: 'range', min: 40, max: 270, step: 1 },
-        },
-        z: {
-            control: { type: 'range', min: 0, max: 800, step: 10 },
         },
         visibleRange: {
             control: { type: 'range', min: 0, max: 10, step: 1 },

@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { cva, sva } from '../../../styled-system/css'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Stack } from '../../../styled-system/jsx';
 
 const buttonStyle = cva({
@@ -41,6 +41,7 @@ const styles = sva({
             position: 'relative',
             display: 'flex',
             perspective: 1420,
+            transformStyle: "preserve-3d",
             overflow: 'hidden',
         },
         slide: {
@@ -67,13 +68,12 @@ const styles = sva({
 
 type Props = {
     rotation: number;
-    z: number;
     visibleRange: number;
     slideHeight: number;
     slideCount: number;
 }
 
-const CarouselR3 = ({ rotation = 38, z = 220, visibleRange = 2, slideHeight = 150, slideCount = 5 }: Props) => {
+const CarouselR3 = ({ rotation = 38, visibleRange = 2, slideHeight = 150, slideCount = 5 }: Props) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const [containerHeight, setContainerHeight] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -100,16 +100,18 @@ const CarouselR3 = ({ rotation = 38, z = 220, visibleRange = 2, slideHeight = 15
         const center = containerHeight / 2;
         const itemCenter = slideHeight / 2;
 
+        const maxAngleRad = (rotation * Math.PI) / 180;
+        const angle = (diff / visibleRange) * maxAngleRad;
+        const radiusScale = (0.75 * slideHeight * visibleRange) / Math.max(maxAngleRad, 0.01);
+
         return {
-            y: diff * slideHeight - (diff * slideHeight / 4) + center - itemCenter,
-            z: -abs * z,
-            rotateY: diff == 0 ? 0 : (-1 * diff / visibleRange) * rotation,
-            // scale: Math.max(1 - abs * 0.24, 0.1),
+            y: radiusScale * Math.sin(angle) + center - itemCenter,
+            z: -radiusScale * (1 - Math.cos(angle)),
+            rotateX: -(angle * 180) / Math.PI,
+            scale: 0.5 + 0.5 * Math.cos(angle),
             opacity,
             zIndex: 100 - abs,
-            pointerEvents: (inRange && abs !== 0 ? "auto" : abs === 0 ? "auto" : "none") as
-                | "auto"
-                | "none",
+            pointerEvents: (inRange ? "auto" : "none") as "auto" | "none",
         };
 
     }
@@ -122,9 +124,9 @@ const CarouselR3 = ({ rotation = 38, z = 220, visibleRange = 2, slideHeight = 15
                 style={{ width: 420, height: slideHeight }}
                 animate={{
                     y: anim.y,
-                    // z: anim.z,
-                    rotateX: anim.rotateY,
-                    // scale: anim.scale,
+                    z: anim.z,
+                    rotateX: anim.rotateX,
+                    scale: anim.scale,
                     opacity: anim.opacity,
                 }}>{index}</motion.div>
         )
